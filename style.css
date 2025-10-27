@@ -881,6 +881,17 @@ kbd {
     }
 }
 
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
 @keyframes spin {
     to {
         transform: rotate(360deg);
@@ -893,6 +904,94 @@ kbd {
     }
     50% {
         opacity: 0.5;
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes typing {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes blink {
+    50% {
+        border-color: transparent;
+    }
+}
+
+/* === WELCOME ANIMATION === */
+.welcome-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.98), rgba(30, 41, 59, 0.98));
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    animation: fadeOut 0.5s ease 3s forwards;
+}
+
+.welcome-content {
+    text-align: center;
+    animation: scaleIn 0.8s ease;
+}
+
+.welcome-title {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #38bdf8;
+    text-shadow: 0 0 30px rgba(56, 189, 248, 0.6);
+    margin-bottom: 20px;
+    animation: slideInDown 0.6s ease;
+}
+
+.welcome-subtitle {
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+    overflow: hidden;
+    border-right: 3px solid #38bdf8;
+    white-space: nowrap;
+    margin: 0 auto;
+    animation: typing 2s steps(30) 0.5s forwards, blink 0.75s step-end infinite;
+    max-width: fit-content;
+}
+
+.welcome-icon {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 30px;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.welcome-icon svg {
+    width: 100%;
+    height: 100%;
+    color: #38bdf8;
+    filter: drop-shadow(0 0 30px rgba(56, 189, 248, 0.8));
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        pointer-events: none;
     }
 }
 
@@ -953,10 +1052,11 @@ kbd {
 
     textarea {
         font-size: 0.85rem;
+        padding-left: 45px;
     }
 
     .line-numbers {
-        min-width: 40px;
+        width: 35px;
         font-size: 0.8rem;
     }
 

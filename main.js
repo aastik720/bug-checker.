@@ -121,11 +121,40 @@ public class Calculator {
 // ============================================================================
 
 function init() {
+    showWelcomeAnimation();
     loadSettings();
     attachEventListeners();
     updateLineNumbers();
     updateStats();
-    showToast('Welcome to AI Bug Checker!', 'info');
+    
+    // Show welcome toast after animation
+    setTimeout(() => {
+        showToast('Welcome to AI Bug Checker!', 'info');
+    }, 3500);
+}
+
+function showWelcomeAnimation() {
+    const welcomeOverlay = document.createElement('div');
+    welcomeOverlay.className = 'welcome-overlay';
+    welcomeOverlay.innerHTML = `
+        <div class="welcome-content">
+            <div class="welcome-icon">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9.75 3.5L13.25 7L9.75 10.5M14.25 13.5L10.75 17L14.25 20.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                </svg>
+            </div>
+            <h1 class="welcome-title">AI Bug Checker</h1>
+            <p class="welcome-subtitle">Start typing your code...</p>
+        </div>
+    `;
+    
+    document.body.appendChild(welcomeOverlay);
+    
+    // Remove overlay after animation
+    setTimeout(() => {
+        welcomeOverlay.remove();
+    }, 3500);
 }
 
 function loadSettings() {
@@ -183,21 +212,8 @@ function handleCodeInput(e) {
 }
 
 function syncScroll() {
-    // Synchronize the scroll position of line numbers with textarea
-    const scrollTop = elements.codeEditor.scrollTop;
-    const scrollHeight = elements.codeEditor.scrollHeight;
-    const clientHeight = elements.codeEditor.clientHeight;
-    const lineHeight = parseFloat(getComputedStyle(elements.codeEditor).lineHeight);
-    
-    // Calculate which line is at the top
-    const topLine = Math.floor(scrollTop / lineHeight);
-    
-    // Update line numbers display to match visible lines
-    const totalLines = (state.currentCode || '\n').split('\n').length;
-    const visibleLines = Math.ceil(clientHeight / lineHeight);
-    
-    // Scroll line numbers container
-    elements.lineNumbers.scrollTop = scrollTop;
+    // Synchronize line numbers scroll with textarea
+    elements.lineNumbers.style.transform = `translateY(-${elements.codeEditor.scrollTop}px)`;
 }
 
 function handleKeyDown(e) {

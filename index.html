@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Professional code analyzer and bug checker for multiple programming languages">
+    <title>AI Bug Checker - Advanced Code Analyzer</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Main Container -->
+    <div class="container">
+        
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-wrapper">
+                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9.75 3.5L13.25 7L9.75 10.5M14.25 13.5L10.75 17L14.25 20.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                <h1>AI Bug Checker</h1>
+            </div>
+            <p class="subtitle">Analyze, fix, and improve your code with intelligent algorithms ⚡</p>
+        </header>
+
+        <!-- Main Grid Layout -->
+        <div class="main-grid">
+            
+            <!-- Left Panel - Code Editor -->
+            <div class="panel editor-panel">
+                <div class="panel-header">
+                    <h2 class="panel-title">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                            <path d="M8 3H5C3.89543 3 3 3.89543 3 5V8M8 21H5C3.89543 21 3 20.1046 3 19V16M16 3H19C20.1046 3 21 3.89543 21 5V8M16 21H19C20.1046 21 21 20.1046 21 19V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        Code Editor
+                    </h2>
+                    <div class="editor-stats">
+                        <span class="stat-item">
+                            <span class="stat-label">Lines:</span>
+                            <span class="stat-value" id="lineCount">0</span>
+                        </span>
+                        <span class="stat-item">
+                            <span class="stat-label">Chars:</span>
+                            <span class="stat-value" id="charCount">0</span>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Toolbar -->
+                <div class="toolbar">
+                    <div class="toolbar-left">
+                        <label for="languageSelect">Language:</label>
+                        <select id="languageSelect" aria-label="Select programming language">
+                            <option value="javascript">JavaScript</option>
+                            <option value="python">Python</option>
+                            <option value="java">Java</option>
+                            <option value="cpp">C++</option>
+                            <option value="c">C</option>
+                            <option value="php">PHP</option>
+                            <option value="ruby">Ruby</option>
+                            <option value="go">Go</option>
+                        </select>
+                    </div>
+                    <div class="toolbar-right">
+                        <button id="loadSampleBtn" class="btn-ghost" title="Load sample code">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                <path d="M4 16V17C4 18.6569 5.34315 20 7 20H17C18.6569 20 20 18.6569 20 17V16M16 8L12 4M12 4L8 8M12 4V16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Sample
+                        </button>
+                        <button id="clearBtn" class="btn-ghost" title="Clear editor">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                <path d="M19 7L18.1327 19.1425C18.0579 20.1891 17.187 21 16.1378 21H7.86224C6.81296 21 5.94208 20.1891 5.86732 19.1425L5 7M10 11V17M14 11V17M15 7V4C15 3.44772 14.5523 3 14 3H10C9.44772 3 9 3.44772 9 4V7M4 7H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Clear
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Code Editor with Line Numbers -->
+                <div class="editor-wrapper">
+                    <div class="line-numbers" id="lineNumbers">1</div>
+                    <textarea 
+                        id="codeEditor" 
+                        placeholder="// Paste or write your code here...
+// Example:
+function calculateSum(a, b) {
+    return a + b;
+}
+
+console.log(calculateSum(5, 10));"
+                        spellcheck="false"
+                        aria-label="Code editor"
+                    ></textarea>
+                </div>
+            </div>
+
+            <!-- Right Panel - Analysis Results -->
+            <div class="panel results-panel">
+                <div class="panel-header">
+                    <h2 class="panel-title">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                            <path d="M9 5H7C5.89543 5 5 5.89543 5 7V19C5 20.1046 5.89543 21 7 21H17C18.1046 21 19 20.1046 19 19V7C19 5.89543 18.1046 5 17 5H15M9 5C9 6.10457 9.89543 7 11 7H13C14.1046 7 15 6.10457 15 5M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Analysis Results
+                    </h2>
+                    <div class="result-badge" id="issueCount">
+                        <span>0 issues</span>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <button id="analyzeBtn" class="btn-primary">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
+                            <path d="M21 21L16.65 16.65" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        Analyze Code
+                    </button>
+                    <button id="autoFixBtn" class="btn-success" disabled>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M14.7 6.3C15.1 5.9 15.7 5.9 16.1 6.3L17.7 7.9C18.1 8.3 18.1 8.9 17.7 9.3L9 18H7V16L14.7 6.3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M13 8L16 11" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        Auto Fix
+                    </button>
+                    <button id="downloadBtn" class="btn-ghost" disabled>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M21 15V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V15M17 10L12 15M12 15L7 10M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Download Report
+                    </button>
+                </div>
+
+                <!-- Results Container -->
+                <div class="results-container" id="resultsContainer">
+                    <div class="result-empty">
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
+                            <path d="M9 11L12 14L22 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M21 12V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V5C3 3.89543 3.89543 3 5 3H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <h3>No Analysis Yet</h3>
+                        <p>Click "Analyze Code" to check for bugs and issues</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Metrics Panel -->
+        <div class="metrics-panel">
+            <div class="metric-card">
+                <div class="metric-icon" style="background: linear-gradient(135deg, #3b82f6, #2563eb);">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M13 10V3L4 14H11L11 21L20 10L13 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="metric-content">
+                    <div class="metric-label">Readability Score</div>
+                    <div class="metric-value" id="readabilityScore">--</div>
+                </div>
+                <div class="metric-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="readabilityBar"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-icon" style="background: linear-gradient(135deg, #10b981, #059669);">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                        <path d="M12 6V12L16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <div class="metric-content">
+                    <div class="metric-label">Complexity</div>
+                    <div class="metric-value" id="complexityScore">--</div>
+                </div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-icon" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M12 9V13M12 17H12.01M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="metric-content">
+                    <div class="metric-label">Issues Found</div>
+                    <div class="metric-value" id="totalIssues">0</div>
+                </div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-icon" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M7 8H17M7 12H17M7 16H13M3 5C3 3.89543 3.89543 3 5 3H19C20.1046 3 21 3.89543 21 5V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="metric-content">
+                    <div class="metric-label">Code Quality</div>
+                    <div class="metric-value" id="qualityGrade">--</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <p>⚙️ Built with 💙 by <a href="#" target="_blank">Aastik's AI Lab</a></p>
+                </div>
+                <div class="footer-right">
+                    <div class="keyboard-shortcuts">
+                        <span class="shortcut-label">Shortcuts:</span>
+                        <kbd>Ctrl+Enter</kbd> Analyze
+                        <kbd>Ctrl+S</kbd> Save
+                        <kbd>Ctrl+K</kbd> Clear
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Settings Panel (Floating) -->
+    <div class="settings-panel" id="settingsPanel">
+        <div class="settings-header">
+            <h3>⚙️ Settings</h3>
+            <button class="settings-toggle" id="settingsToggle">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </button>
+        </div>
+        <div class="settings-content">
+            <label class="setting-item">
+                <input type="checkbox" id="autoAnalyze">
+                <span>Auto-analyze on type</span>
+            </label>
+            <label class="setting-item">
+                <input type="checkbox" id="strictMode">
+                <span>Strict mode (more checks)</span>
+            </label>
+            <label class="setting-item">
+                <span>Tab size:</span>
+                <select id="tabSize">
+                    <option value="2">2 spaces</option>
+                    <option value="4" selected>4 spaces</option>
+                    <option value="8">8 spaces</option>
+                </select>
+            </label>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+        <p>Analyzing code...</p>
+    </div>
+
+    <!-- External JavaScript -->
+    <script src="main.js"></script>
+</body>
+</html>
